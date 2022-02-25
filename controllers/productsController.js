@@ -1,5 +1,16 @@
 const productsServices = require('../services/productsService');
 
+async function getById(req, res, next) {
+  try {
+    const { id } = req.params;
+    const product = await productsServices.getById(id);
+    if (!product) return res.status(404).json({ message: 'Product not found' });
+    return res.status(200).json(product);
+  } catch (e) {
+    next(e);
+  }
+}
+
 async function createProduct(req, res, next) {
   try {
     const { name, quantity } = req.body;
@@ -16,7 +27,6 @@ async function updateProductById(req, res, next) {
     const { id } = req.params;
     const { name, quantity } = req.body;
     const update = await productsServices.updateProductById(Number(id), name, quantity);
-    console.log(update);
     if (!update) return res.status(404).json({ message: 'Product not found' });
     return res.status(200).json({ id, name, quantity });
   } catch (e) {
@@ -25,7 +35,20 @@ async function updateProductById(req, res, next) {
   }
 }
 
+async function deleteProductById(req, res, next) {
+  try {
+    const { id } = req.params;
+    const exclude = await productsServices.deleteProductById(id);
+    if (!exclude) return res.status(404).json({ message: 'Product not found' });
+    return res.status(204).end();
+  } catch (e) {
+    next(e);
+  }
+}
+
 module.exports = {
   createProduct,
   updateProductById,
+  deleteProductById,
+  getById,
 };

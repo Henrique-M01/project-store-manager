@@ -1,5 +1,11 @@
 const productsModel = require('../models/productsModel');
 
+async function getById(id) {
+  const product = await productsModel.getById(id);
+  if (product.length === 0) return false;
+  return product;
+}
+
 async function createProduct(name, quantity) {
   const allProducts = await productsModel.getAll();
   const nameExist = allProducts.some((product) => product.name === name);
@@ -16,7 +22,16 @@ async function updateProductById(id, name, quantity) {
   return edited;
 }
 
+async function deleteProductById(id) {
+  const product = await productsModel.getById(id);
+  if (product.length === 0) return false;
+  await productsModel.deleteProduct(id);
+  return true;
+}
+
 module.exports = {
   createProduct,
   updateProductById,
+  deleteProductById,
+  getById,
 };
