@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const productsRouter = require('./router/productsRouter');
+const salesRouter = require('./router/salesRouter');
 
 const app = express();
 
@@ -11,6 +12,8 @@ app.use(bodyParser.json());
 app.get('/', (_request, response) => {
   response.send();
 });
+
+app.use('/sales', salesRouter);
 
 app.use('/products', productsRouter);
 
