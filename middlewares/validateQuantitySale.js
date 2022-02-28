@@ -1,8 +1,7 @@
 function quantityExistSale(req, res, next) {
   try {
     const [{ quantity }] = req.body;
-    console.log(quantity, !quantity);
-    if (!quantity) {
+    if (quantity === undefined) {
       return res.status(400).json({ message: '"quantity" is required' });
     }
   

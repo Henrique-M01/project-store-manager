@@ -22,8 +22,6 @@ async function registerSale(sales) {
 }
 
 async function updateSale(id, productId, quantity) {
-  const sale = await salesModel.getById(id);
-  if (sale.length === 0) return false;
   await salesModel.updateSale(id, productId, quantity);
   return { saleId: id, itemUpdated: [{ productId, quantity }] };
 }
