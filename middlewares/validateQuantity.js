@@ -18,6 +18,8 @@ function quantityValue(req, res, next) {
       return res.status(422).json({
         message: '"quantity" must be greater than or equal to 1' });
     }
+
+    next();
   } catch (e) {
     next(e);
   }
