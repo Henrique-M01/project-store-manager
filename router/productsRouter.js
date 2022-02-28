@@ -6,12 +6,12 @@ const { quantityExist, quantityValue } = require('../middlewares/validateQuantit
 const productsRouter = express.Router();
 
 productsRouter.post('/',
-  nameLength, nameExist, quantityExist, quantityValue, productsControler.createProduct);
+  nameExist, nameLength, quantityExist, quantityValue, productsControler.createProduct);
 
 productsRouter.get('/', productsControler.getAll);
 
 productsRouter.put('/:id',
-  nameLength, nameExist, quantityExist, quantityValue, productsControler.updateProductById);
+  nameExist, nameLength, quantityExist, quantityValue, productsControler.updateProductById);
 
 productsRouter.delete('/:id', productsControler.deleteProductById);
 

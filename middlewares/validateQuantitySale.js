@@ -1,7 +1,8 @@
-function quantityExist(req, res, next) {
+function quantityExistSale(req, res, next) {
   try {
-    const { quantity } = req.body;
-    if (quantity === undefined) {
+    const [{ quantity }] = req.body;
+    console.log(quantity, !quantity);
+    if (!quantity) {
       return res.status(400).json({ message: '"quantity" is required' });
     }
   
@@ -11,9 +12,9 @@ function quantityExist(req, res, next) {
   }
 }
 
-function quantityValue(req, res, next) {
+function quantityValueSale(req, res, next) {
   try {
-    const { quantity } = req.body;
+    const [{ quantity }] = req.body;
     if (quantity <= 0) {
       return res.status(422).json({
         message: '"quantity" must be greater than or equal to 1' });
@@ -24,6 +25,6 @@ function quantityValue(req, res, next) {
 }
 
 module.exports = {
-  quantityExist,
-  quantityValue,
+  quantityExistSale,
+  quantityValueSale,
 };
