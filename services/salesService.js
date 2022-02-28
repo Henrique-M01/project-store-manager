@@ -11,7 +11,18 @@ async function getById(id) {
   return sale;
 }
 
+async function registerSale(sales) {
+  const sale = await salesModel.registerSale();
+  const response = { id: sale.insertId, itemsSold: sales };
+  // Lógica realizada com ajuda do Leandro Oliveira e seu código;
+  sales.forEach(async ({ productId, quantity }) => {
+    await salesModel.registerSaleProducts(productId, quantity, sale.insertId);
+  });
+  return response;
+}
+
 module.exports = {
   getAll,
   getById,
+  registerSale,
 };

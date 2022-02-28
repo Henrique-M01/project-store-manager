@@ -16,8 +16,7 @@ async function getAll() {
 }
 
 async function getById(id) {
-  try {
-    const query = `SELECT 
+  const query = `SELECT 
                   sp.product_id AS productId,
                   sp.quantity,
                   s.date
@@ -30,12 +29,26 @@ async function getById(id) {
                 ORDER BY sp.sale_id , sp.product_id;`;
   const [response] = await connection.execute(query, [id]);
   return response;
-  } catch (e) {
-    console.log(e);
-  }
+}
+
+async function registerSale() {
+  const query = 'INSERT INTO StoreManager.sales (date) VALUES (NOW());';
+  const [result] = await connection.execute(query);
+  return result; 
+}
+
+async function registerSaleProducts(productId, quantity, id) {
+  const query = `INSERT INTO StoreManager.sales_products 
+                  (sale_id, product_id, quantity)
+                VALUES (?, ?, ?);`;
+
+  const [result] = await connection.execute(query, [id, productId, quantity]);
+  return result;
 }
 
 module.exports = {
   getAll,
   getById,
+  registerSale,
+  registerSaleProducts,
 };
