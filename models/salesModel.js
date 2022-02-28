@@ -46,9 +46,18 @@ async function registerSaleProducts(productId, quantity, id) {
   return result;
 }
 
+async function updateSale(saleId, productId, quantity) {
+  const query = `UPDATE StoreManager.sales_products
+                SET sale_id = ?, product_id = ?, quantity= ?
+                WHERE sale_id = ?;`;
+  const [result] = await connection.execute(query, [saleId, productId, quantity, saleId]);
+  return result;
+}
+
 module.exports = {
   getAll,
   getById,
   registerSale,
   registerSaleProducts,
+  updateSale,
 };

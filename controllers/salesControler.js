@@ -30,8 +30,20 @@ async function registerSale(req, res, next) {
   }
 }
 
+async function updateSale(req, res, next) {
+  try {
+    const { id } = req.params;
+    const [{ productId, quantity }] = req.body;
+    const update = await salesService.updateSale(id, productId, quantity);
+    return res.status(200).json(update);
+  } catch (e) {
+    next(e);
+  }
+}
+
 module.exports = {
   getAll,
   getById,
   registerSale,
+  updateSale,
 };
