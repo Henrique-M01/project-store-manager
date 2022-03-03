@@ -22,7 +22,7 @@ async function getById(id) {
                   s.date
                 FROM
                   StoreManager.sales_products AS sp
-                      LEFT JOIN
+                LEFT JOIN
                   StoreManager.sales AS s ON sp.sale_id = s.id
                 WHERE
                   sp.sale_id = ?
@@ -51,6 +51,7 @@ async function updateSale(saleId, productId, quantity) {
                 SET sale_id = ?, product_id = ?, quantity= ?
                 WHERE sale_id = ?;`;
   const [result] = await connection.execute(query, [saleId, productId, quantity, saleId]);
+  console.log(result);
   return result;
 }
 
